@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.RadioGroup
+import androidx.navigation.Navigation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,14 +44,21 @@ class SignupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val signupActivityCheckBoxVirus = view.findViewById<CheckBox>(R.id.signupActivity_checkBox_Virus)
-        val signupActivityRadioGroupVirusRadioGroup = view.findViewById<RadioGroup>(R.id.signupActivity_radioGroup_VirusRadioGroup)
+        val signupActivityBtnSignUp = view.findViewById<Button>(R.id.signupActivity_btn_SignUp)
+        val signupActivityCheckBoxVirus =
+            view.findViewById<CheckBox>(R.id.signupActivity_checkBox_Virus)
+        val signupActivityRadioGroupVirusRadioGroup =
+            view.findViewById<RadioGroup>(R.id.signupActivity_radioGroup_VirusRadioGroup)
 
-        signupActivityCheckBoxVirus.setOnCheckedChangeListener { _ , isChecked ->
+        signupActivityCheckBoxVirus.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked)
                 signupActivityRadioGroupVirusRadioGroup.visibility = View.VISIBLE
             else
                 signupActivityRadioGroupVirusRadioGroup.visibility = View.INVISIBLE
+        }
+
+        signupActivityBtnSignUp.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_mainFragment)
         }
     }
 
