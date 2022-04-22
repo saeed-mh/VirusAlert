@@ -8,4 +8,5 @@
     <string name="loading_text">در حال لود شدن تصویر</string>
     <string name="pleaseEnterYourPassword">لطفا رمز خود را وارد کنید</string>
     <string name="pleaseEnterYourEmail">لطفا ایمیل خود را وارد کنید</string>
+    <string name="doYouHaveVirus">آیا در حال حاضر بیماری دارید؟</string>
 </resources>
