@@ -58,7 +58,7 @@ class SignupFragment : Fragment() {
         }
 
         signupActivityBtnSignUp.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_mainFragment)
+            Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_statisticsCoronaFragment)
         }
     }
 

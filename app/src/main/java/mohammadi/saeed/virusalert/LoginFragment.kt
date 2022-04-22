@@ -50,7 +50,7 @@ class LoginFragment : Fragment() {
         val loginActivityBtnLogIn = view.findViewById<Button>(R.id.loginActivity_btn_LogIn)
 
         loginActivityBtnLogIn.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment)
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_statisticsCoronaFragment)
         }
     }
 

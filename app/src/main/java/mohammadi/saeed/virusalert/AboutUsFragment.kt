@@ -42,22 +42,19 @@ class AboutUsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val aboutUsActivityBottomNavigationViewBtnNav =
-            view.findViewById<BottomNavigationView>(R.id.aboutUsActivity_bottomNavigationView_BtnNav)
+            view.findViewById<BottomNavigationView>(R.id.statisticsCoronaActivity_bottomNavigationView_BtnNav)
+
+        aboutUsActivityBottomNavigationViewBtnNav.selectedItemId = R.id.item3
         
         aboutUsActivityBottomNavigationViewBtnNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.item1 -> {
-                    /*MainActivity().replaceFragment(
+                    MainActivity().replaceFragment(
                         view,
-                        R.id.action_mainFragment_to_statisticsCoronaFragment
-                    )*/
+                        R.id.action_aboutUsFragment_to_statisticsCoronaFragment
+                    )
                 }
-                R.id.item3 -> {
-                    /*MainActivity().replaceFragment(
-                        view,
-                        R.id.action_mainFragment_to_aboutUsFragment
-                    )*/
-                }
+
             }
             return@setOnItemSelectedListener true
         }

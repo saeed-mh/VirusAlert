@@ -7,7 +7,7 @@
     tools:context=".StatisticsCoronaFragment">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/aboutUsActivity_bottomNavigationView_BtnNav"
+        android:id="@+id/statisticsCoronaActivity_bottomNavigationView_BtnNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
@@ -15,4 +15,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/main_menu" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="آمار کرونا"
+        app:layout_constraintBottom_toTopOf="@+id/statisticsCoronaActivity_bottomNavigationView_BtnNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

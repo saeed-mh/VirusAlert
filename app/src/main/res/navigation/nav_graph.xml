@@ -47,7 +47,11 @@
         android:id="@+id/aboutUsFragment"
         android:name="mohammadi.saeed.virusalert.AboutUsFragment"
         android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" />
+        tools:layout="@layout/fragment_about_us" >
+        <action
+            android:id="@+id/action_aboutUsFragment_to_statisticsCoronaFragment"
+            app:destination="@id/statisticsCoronaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statisticsCoronaFragment"
         android:name="mohammadi.saeed.virusalert.StatisticsCoronaFragment"
