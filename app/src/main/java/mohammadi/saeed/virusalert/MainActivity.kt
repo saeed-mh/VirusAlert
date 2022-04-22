@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun replaceFragment(view: View, action: Int) {
-        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_aboutUsFragment)
+        Navigation.findNavController(view).navigate(action)
     }
 }

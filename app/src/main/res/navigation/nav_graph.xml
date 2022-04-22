@@ -31,8 +31,8 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_loginFragment_to_statisticsCoronaFragment"
+            app:destination="@id/statisticsCoronaFragment" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -40,17 +40,8 @@
         android:label="fragment_signup"
         tools:layout="@layout/fragment_signup" >
         <action
-            android:id="@+id/action_signupFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="mohammadi.saeed.virusalert.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
+            android:id="@+id/action_signupFragment_to_statisticsCoronaFragment"
+            app:destination="@id/statisticsCoronaFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutUsFragment"
@@ -61,5 +52,9 @@
         android:id="@+id/statisticsCoronaFragment"
         android:name="mohammadi.saeed.virusalert.StatisticsCoronaFragment"
         android:label="fragment_statistics_corona"
-        tools:layout="@layout/fragment_statistics_corona" />
+        tools:layout="@layout/fragment_statistics_corona" >
+        <action
+            android:id="@+id/action_statisticsCoronaFragment_to_aboutUsFragment"
+            app:destination="@id/aboutUsFragment" />
+    </fragment>
 </navigation>

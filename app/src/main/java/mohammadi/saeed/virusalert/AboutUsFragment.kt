@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +36,32 @@ class AboutUsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_about_us, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val aboutUsActivityBottomNavigationViewBtnNav =
+            view.findViewById<BottomNavigationView>(R.id.aboutUsActivity_bottomNavigationView_BtnNav)
+        
+        aboutUsActivityBottomNavigationViewBtnNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.item1 -> {
+                    /*MainActivity().replaceFragment(
+                        view,
+                        R.id.action_mainFragment_to_statisticsCoronaFragment
+                    )*/
+                }
+                R.id.item3 -> {
+                    /*MainActivity().replaceFragment(
+                        view,
+                        R.id.action_mainFragment_to_aboutUsFragment
+                    )*/
+                }
+            }
+            return@setOnItemSelectedListener true
+        }
+
     }
 
     companion object {
