@@ -9,5 +9,18 @@
         android:id="@+id/introFragment"
         android:name="mohammadi.saeed.virusalert.IntroFragment"
         android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" />
+        tools:layout="@layout/fragment_intro" >
+        <action
+            android:id="@+id/action_introFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="mohammadi.saeed.virusalert.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

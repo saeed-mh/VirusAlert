@@ -6,4 +6,6 @@
     <string name="logIn">ورود</string>
     <string name="virusAlert">ویروس یاب</string>
     <string name="loading_text">در حال لود شدن تصویر</string>
+    <string name="pleaseEnterYourPassword">لطفا رمز خود را وارد کنید</string>
+    <string name="pleaseEnterYourEmail">لطفا ایمیل خود را وارد کنید</string>
 </resources>
