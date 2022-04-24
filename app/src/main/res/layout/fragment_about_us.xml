@@ -7,7 +7,7 @@
     tools:context=".AboutUsFragment">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/statisticsCoronaActivity_bottomNavigationView_BtnNav"
+        android:id="@+id/mainBottomNavigationMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
