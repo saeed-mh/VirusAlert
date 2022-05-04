@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -44,21 +44,39 @@
             app:destination="@id/statisticsCoronaFragment" />
     </fragment>
     <fragment
-        android:id="@+id/aboutUsFragment"
-        android:name="mohammadi.saeed.virusalert.AboutUsFragment"
-        android:label="fragment_about_us"
-        tools:layout="@layout/fragment_about_us" >
-        <action
-            android:id="@+id/action_aboutUsFragment_to_statisticsCoronaFragment"
-            app:destination="@id/statisticsCoronaFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/statisticsCoronaFragment"
         android:name="mohammadi.saeed.virusalert.StatisticsCoronaFragment"
         android:label="fragment_statistics_corona"
         tools:layout="@layout/fragment_statistics_corona" >
         <action
-            android:id="@+id/action_statisticsCoronaFragment_to_aboutUsFragment"
-            app:destination="@id/aboutUsFragment" />
+            android:id="@+id/action_statisticsCoronaFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_statisticsCoronaFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="mohammadi.saeed.virusalert.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_statisticsCoronaFragment"
+            app:destination="@id/statisticsCoronaFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myAccountFragment"
+        android:name="mohammadi.saeed.virusalert.MyAccountFragment"
+        android:label="fragment_my_account"
+        tools:layout="@layout/fragment_my_account" >
+        <action
+            android:id="@+id/action_myAccountFragment_to_statisticsCoronaFragment"
+            app:destination="@id/statisticsCoronaFragment" />
+        <action
+            android:id="@+id/action_myAccountFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
 </navigation>

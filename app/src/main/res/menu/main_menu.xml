@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/item3"
-        android:icon="@drawable/ic_baseline_contact_support_24"
-        android:title="درباره ما و ثبت پیشنهادات" />
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="من" />
 
 </menu>
