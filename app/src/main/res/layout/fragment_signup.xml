@@ -41,19 +41,6 @@
         app:layout_constraintStart_toStartOf="@+id/signupActivity_emailText_Email"
         app:layout_constraintTop_toBottomOf="@+id/signupActivity_emailText_Email" />
 
-    <CheckBox
-        android:id="@+id/signupActivity_checkBox_Virus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layoutDirection="ltr"
-        android:text="@string/doYouHaveVirus"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivity_editText_Password"
-        app:layout_constraintStart_toStartOf="@+id/signupActivity_editText_Password"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivity_editText_Password" />
-
     <Button
         android:id="@+id/signupActivity_btn_SignUp"
         android:layout_width="350dp"
@@ -69,47 +56,4 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <RadioGroup
-        android:id="@+id/signupActivity_radioGroup_VirusRadioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
-        android:layoutDirection="rtl"
-        android:textDirection="rtl"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/signupActivity_btn_SignUp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivity_editText_Password">
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="کرونا"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="سرخک"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="سرماخوردگی"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="بیماری دیگر"
-            android:textSize="16sp" />
-    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>
