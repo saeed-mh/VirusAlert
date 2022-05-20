@@ -19,7 +19,6 @@ class StatisticsCoronaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentStatisticsCoronaBinding.bind(view)
 
-        // api 'https://api.covid19api.com/' for this fragment
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 // items 1 == this fragment
