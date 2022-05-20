@@ -14,6 +14,7 @@ import mohammadi.saeed.virusalert.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
     lateinit var binding: FragmentLoginBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,24 +32,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(view: View) {
-        val loginUserAPI =
-            "http://192.168.43.121:5000/login_user?username=${binding.loginActivityEmailTextEmail.text}&password=${binding.loginActivityEditTextPassword.text}"
-        val requestQueue = Volley.newRequestQueue(this.context)
-
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, loginUserAPI, null, {
-            val jsonObject = it.getBoolean("result")
-            if (jsonObject) {
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_loginFragment_to_statisticsCoronaFragment)
-            } else
-                Toast.makeText(this.context, "نام کاربری و رمز اشتباه است", Toast.LENGTH_SHORT)
-                    .show()
-
-        }, {
-            Toast.makeText(this.context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT)
-                .show()
-        })
-
-        requestQueue.add(jsonObjectRequest)
+        Requests().loginUser(requireContext(), view, binding.loginActivityEmailTextEmail.text, binding.loginActivityEditTextPassword.text)
     }
 }

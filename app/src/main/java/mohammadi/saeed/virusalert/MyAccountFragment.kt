@@ -15,8 +15,7 @@ import com.android.volley.toolbox.Volley
 import mohammadi.saeed.virusalert.databinding.FragmentMyAccountBinding
 
 class MyAccountFragment : Fragment() {
-    private lateinit var userNamePref: SharedPreferences
-    private lateinit var userName : String
+    lateinit var binding: FragmentMyAccountBinding
     var virusItem = 0
 
     override fun onCreateView(
@@ -28,13 +27,13 @@ class MyAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentMyAccountBinding.bind(view)
+        binding = FragmentMyAccountBinding.bind(view)
         binding.myAccountFragmentBtnApplyChanges.isEnabled = false
         binding.mainBottomNavigationMenu.selectedItemId = R.id.item3
+        val userNamePref = requireContext().getSharedPreferences("userName", Context.MODE_PRIVATE)
 
-        userNamePref = requireContext().getSharedPreferences("userName", Context.MODE_PRIVATE)
+
         binding.myAccountFragmentTxtUserNameTextView.text = userNamePref.getString("userName", " null ")
-        userName = binding.myAccountFragmentTxtUserNameTextView.text.toString()
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
@@ -49,7 +48,7 @@ class MyAccountFragment : Fragment() {
             return@setOnItemSelectedListener true
         }
 
-        binding.myAccountFragmentRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.myAccountFragmentRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.myAccountFragmentBtnApplyChanges.isEnabled = true
             virusItem = when(checkedId) {
                 R.id.radioButton0 -> 0
@@ -74,31 +73,10 @@ class MyAccountFragment : Fragment() {
     }
 
     private fun updateVirus() {
-        val deleteUserAPI = "http://192.168.43.121:5000/update_virus?username=admin&virus=${virusItem}"
-        val requestQueue =Volley.newRequestQueue(this.context)
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
-            val jsonObject = it.getBoolean("result")
-        }, {
-            Toast.makeText(this.context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT)
-                .show()
-        })
-        requestQueue.add((jsonObjectRequest))
+        Requests().updateVirus(requireContext(), virusItem)
     }
 
     private fun deleteUser() {
-
-        val deleteUserAPI = "http://192.168.43.121:5000/delete_user?username=$userName"
-        val requestQueue =Volley.newRequestQueue(this.context)
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
-            val jsonObject = it.getBoolean("result")
-            if (jsonObject) {
-                requireActivity().moveTaskToBack(true)
-                requireActivity().finish()
-            }
-        }, {
-            Toast.makeText(this.context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT)
-                .show()
-        })
-        requestQueue.add((jsonObjectRequest))
+        Requests().deleteUser(requireContext(), requireActivity(), binding.myAccountFragmentTxtUserNameTextView.text.toString())
     }
 }
