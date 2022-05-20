@@ -72,6 +72,7 @@ class Requests {
         requestQueue.add((jsonObjectRequest))
     }
 
+
     fun updateVirus(context: Context, virusItem: Int) {
         val deleteUserAPI = "http://192.168.43.121:5000/update_virus?username=admin&virus=${virusItem}"
         val requestQueue =Volley.newRequestQueue(context)
