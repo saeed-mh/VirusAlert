@@ -32,26 +32,6 @@ class StatisticsCoronaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentStatisticsCoronaBinding.bind(view)
-        var corona = 0
-        var measles = 0
-        var flu = 0
-
-        val deleteUserAPI = "http://192.168.43.121:5000/select_virus_information"
-        val requestQueue = Volley.newRequestQueue(context)
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
-            val viruses = it.getJSONArray("viruses").toArrayList()
-            viruses.forEach {
-                when (it) {
-                    "1" -> corona += 1
-                    "2" -> measles += 1
-                    "3" -> flu += 1
-                }
-            }
-
-        }) {
-            Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
-        }
-        requestQueue.add((jsonObjectRequest))
 
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {

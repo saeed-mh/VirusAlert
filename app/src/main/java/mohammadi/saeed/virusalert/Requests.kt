@@ -40,7 +40,7 @@ class Requests {
             } else
                 Toast.makeText(context, "این نام کاربری وجود دارد", Toast.LENGTH_SHORT).show()
         }, {
-            Toast.makeText(context, "مشکل اتصال اینترنت!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "خطا در اتصال به سرور", Toast.LENGTH_SHORT).show()
             return@JsonObjectRequest
         })
         requestQueue.add(jsonObjectRequest)
@@ -64,7 +64,7 @@ class Requests {
                     .show()
 
         }, {
-            Toast.makeText(context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "خطا در اتصال به سرور", Toast.LENGTH_SHORT)
                 .show()
         })
 

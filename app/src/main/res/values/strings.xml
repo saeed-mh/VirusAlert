@@ -9,4 +9,7 @@
     <string name="pleaseEnterYourPassword">لطفا رمز خود را وارد کنید</string>
     <string name="pleaseEnterYourEmail">لطفا ایمیل خود را وارد کنید</string>
     <string name="doYouHaveVirus">آیا در حال حاضر بیماری دارید؟</string>
+    <string name="virusesStatistics">آمار افراد مبتلا</string>
+    <string name="aroundViruses">ویروس های اطراف</string>
+    <string name="myAccount">حساب کاربری</string>
 </resources>

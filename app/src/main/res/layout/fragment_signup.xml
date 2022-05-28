@@ -4,56 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0096ff"
     tools:context=".SignupFragment">
 
-    <EditText
-        android:id="@+id/signupActivity_emailText_Email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/pleaseEnterYourEmail"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:textColorHint="#78909C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/signupActivity_editText_Password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/pleaseEnterYourPassword"
-        android:inputType="textPassword"
-        android:minHeight="48dp"
-        android:textAlignment="center"
-        android:textColorHint="#78909C"
-        app:layout_constraintEnd_toEndOf="@+id/signupActivity_emailText_Email"
-        app:layout_constraintStart_toStartOf="@+id/signupActivity_emailText_Email"
-        app:layout_constraintTop_toBottomOf="@+id/signupActivity_emailText_Email" />
-
-    <Button
-        android:id="@+id/signupActivity_btn_SignUp"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:backgroundTint="#DD3B3B"
-        android:text="@string/signUp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:cornerRadius="20dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="30dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/signupActivityEmailTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="16dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/pleaseEnterYourEmail"
+                android:textColorHint="#0096ff"
+                android:textAlignment="center"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/signupActivityEditTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:inputType="textPassword"
+                android:hint="@string/pleaseEnterYourPassword"
+                android:textColorHint="#0096ff"
+                android:textAlignment="center"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/signupActivityBtnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="130dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/button_color"
+                android:text="@string/signUp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="20dp" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

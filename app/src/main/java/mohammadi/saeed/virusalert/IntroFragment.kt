@@ -38,11 +38,9 @@ class IntroFragment : Fragment() {
         }
     }
 
-    fun checkPermissions() {
+    private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 222)
-        } else {
-            Toast.makeText(requireContext(), "شما مجوز لوکیشن را دارید", Toast.LENGTH_SHORT).show()
         }
     }
 

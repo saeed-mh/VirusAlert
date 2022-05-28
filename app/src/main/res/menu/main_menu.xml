@@ -3,15 +3,15 @@
     <item
         android:id="@+id/item1"
         android:icon="@drawable/ic_baseline_people_24"
-        android:title="آمار کرونا" />
+        android:title="@string/virusesStatistics" />
     <item
         android:id="@+id/item2"
         android:icon="@drawable/ic_baseline_coronavirus_24"
-        android:title="ویروس های اطراف" />
+        android:title="@string/aroundViruses" />
 
     <item
         android:id="@+id/item3"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="من" />
+        android:title="@string/myAccount" />
 
 </menu>

@@ -1,21 +1,14 @@
 package mohammadi.saeed.virusalert
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import mohammadi.saeed.virusalert.databinding.FragmentSignupBinding
 
 class SignupFragment : Fragment() {
-    private lateinit var binding : FragmentSignupBinding
+    private lateinit var binding: FragmentSignupBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,12 +21,31 @@ class SignupFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSignupBinding.bind(view)
 
+
         binding.signupActivityBtnSignUp.setOnClickListener {
-            signUpUser(view)
+            if (checkInputEditText())
+                signUpUser(view)
+        }
+    }
+
+    private fun checkInputEditText() : Boolean {
+        return if (binding.signupActivityEmailTextEmail.text.trim().isEmpty()) {
+            binding.signupActivityEmailTextEmail.error = "وارد کردن نام کاربری ضروری است"
+            false
+        } else if (binding.signupActivityEditTextPassword.text.trim().isEmpty()) {
+            binding.signupActivityEditTextPassword.error = "وارد کردن رمز ضروری است"
+            false
+        } else {
+            true
         }
     }
 
     private fun signUpUser(view: View) {
-        Requests().signupUser(requireContext(), view, binding.signupActivityEmailTextEmail.text, binding.signupActivityEditTextPassword.text)
+        Requests().signupUser(
+            requireContext(),
+            view,
+            binding.signupActivityEmailTextEmail.text,
+            binding.signupActivityEditTextPassword.text
+        )
     }
 }
