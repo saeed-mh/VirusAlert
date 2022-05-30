@@ -32,11 +32,17 @@ class Requests {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, createUserAPI, null, {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
-                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
-                userNamePref.edit().putString("userName", userName.toString()).apply()
+//                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
+//                userNamePref.edit().putString("userName", userName.toString()).apply()
+                val sharedPrefData = SharedPrefData(context)
+                sharedPrefData.setUserName(userName.toString())
+                // for first signup the virus item equals 0
+                updateVirus(context, sharedPrefData.getUserName(), 0)
+                // for first signup latitude and longitude equals 0
+                update_latitude_longitude(context, sharedPrefData.getUserName(), 0.0, 0.0)
 
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_signupFragment_to_statisticsCoronaFragment)
+                val nav = Navigation.findNavController(view)
+                nav.navigate(SignupFragmentDirections.actionSignupFragmentToStatisticsCoronaFragment())
             } else
                 Toast.makeText(context, "این نام کاربری وجود دارد", Toast.LENGTH_SHORT).show()
         }, {
@@ -54,11 +60,13 @@ class Requests {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, loginUserAPI, null, {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
-                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
-                userNamePref.edit().putString("userName", userName.toString()).apply()
+//                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
+//                userNamePref.edit().putString("userName", userName.toString()).apply()
+                val sharedPrefData = SharedPrefData(context)
+                sharedPrefData.setUserName(userName.toString())
 
-                Navigation.findNavController(view)
-                    .navigate(R.id.action_loginFragment_to_statisticsCoronaFragment)
+                val nav = Navigation.findNavController(view)
+                nav.navigate(LoginFragmentDirections.actionLoginFragmentToStatisticsCoronaFragment())
             } else
                 Toast.makeText(context, "نام کاربری و رمز اشتباه است", Toast.LENGTH_SHORT)
                     .show()
@@ -87,14 +95,15 @@ class Requests {
         requestQueue.add((jsonObjectRequest))
     }
 
-    fun updateVirus(context: Context, virusItem: Int) {
+    fun updateVirus(context: Context, userName: String, virusItem: Int) {
         val deleteUserAPI =
-            "http://192.168.43.121:5000/update_virus?username=admin&virus=${virusItem}"
+            "http://192.168.43.121:5000/update_virus?username=${userName}&virus=${virusItem}"
         val requestQueue = Volley.newRequestQueue(context)
         val stringRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
         }, {
-            Toast.makeText(context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT)
-                .show()
+            val sharedPrefData = SharedPrefData(context)
+            sharedPrefData.setVirusItemSelected(virusItem)
+            Toast.makeText(context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT).show()
         })
         requestQueue.add(stringRequest)
     }
@@ -111,9 +120,10 @@ class Requests {
             val viruses = it.getJSONArray("viruses").toArrayList()
 
             for (index in 0 until viruses.size) {
-                if (viruses[index].toIntOrNull() == null) {
-                    // do not anything
-                } else {
+//                if (viruses[index].toIntOrNull() == null) {
+//                    // do not anything
+//                } else {
+                if (viruses[index].toInt() != 0) {
                     val users = Users(
                         latitudes[index].toDouble(),
                         longitudes[index].toDouble(),
@@ -130,6 +140,7 @@ class Requests {
                         4 -> addUserOnMap(map, users.latitude, users.longitude, Color.BLACK)
                     }
                 }
+//                }
             }
 
         }, {

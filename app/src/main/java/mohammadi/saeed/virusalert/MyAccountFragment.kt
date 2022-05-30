@@ -20,9 +20,10 @@ import mohammadi.saeed.virusalert.databinding.FragmentMyAccountBinding
 
 class MyAccountFragment : Fragment() {
     lateinit var binding: FragmentMyAccountBinding
-    lateinit var fusedLocationProviderClient:FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var locationCallback: LocationCallback
+    lateinit var sharedPrefData: SharedPrefData
     var virusItem = 0
 
     override fun onCreateView(
@@ -35,34 +36,38 @@ class MyAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentMyAccountBinding.bind(view)
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        locationRequest = LocationRequest.create()
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
-                for (location in p0.locations) {
-                    Requests().update_latitude_longitude(requireContext(), binding.myAccountFragmentTxtUserNameTextView.text.toString(), location.latitude, location.longitude)
-                    Toast.makeText(requireContext(), "${location.latitude} : ${location.longitude}", Toast.LENGTH_LONG).show()
-                    //Log.d("ChangeLoc", "${location.latitude} : ${location.longitude}")
-                }
+        sharedPrefData = SharedPrefData(requireContext())
+        binding.myAccountFragmentTxtUserNameTextView.text = sharedPrefData.getUserName()
+        binding.myAccountFragmentBtnApplyChanges.isEnabled = false
+        binding.mainBottomNavigationMenu.selectedItemId = R.id.item3
+        virusItem = sharedPrefData.getVirusItemSelected()
+        when (virusItem) {
+            0 -> binding.radioButton0.isChecked = true
+            1 -> binding.radioButton1.isChecked = true
+            2 -> binding.radioButton2.isChecked = true
+            3 -> binding.radioButton3.isChecked = true
+            4 -> binding.radioButton4.isChecked = true
+            else -> {
+                binding.radioButton0.isChecked = true
             }
         }
 
-        binding.myAccountFragmentBtnApplyChanges.isEnabled = false
-        binding.mainBottomNavigationMenu.selectedItemId = R.id.item3
-        val userNamePref = requireContext().getSharedPreferences("userName", Context.MODE_PRIVATE)
+        updatingLocation()
 
-        getLocationUpdates()
-
-        binding.myAccountFragmentTxtUserNameTextView.text = userNamePref.getString("userName", " null ")
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.item1 -> {
-                    MainActivity().replaceFragment(view, R.id.action_myAccountFragment_to_statisticsCoronaFragment)
+                    MainActivity().replaceFragment(
+                        view,
+                        R.id.action_myAccountFragment_to_statisticsCoronaFragment
+                    )
                 }
                 R.id.item2 -> {
-                    MainActivity().replaceFragment(view, R.id.action_myAccountFragment_to_mapFragment)
+                    MainActivity().replaceFragment(
+                        view,
+                        R.id.action_myAccountFragment_to_mapFragment
+                    )
                 }
                 // items 3 == this fragment
             }
@@ -71,7 +76,7 @@ class MyAccountFragment : Fragment() {
 
         binding.myAccountFragmentRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             binding.myAccountFragmentBtnApplyChanges.isEnabled = true
-            virusItem = when(checkedId) {
+            virusItem = when (checkedId) {
                 R.id.radioButton0 -> 0
                 R.id.radioButton1 -> 1
                 R.id.radioButton2 -> 2
@@ -81,6 +86,7 @@ class MyAccountFragment : Fragment() {
                     0
                 }
             }
+            sharedPrefData.setVirusItemSelected(virusItem)
         }
 
         binding.myAccountFragmentBtnApplyChanges.setOnClickListener {
@@ -94,19 +100,50 @@ class MyAccountFragment : Fragment() {
     }
 
     private fun updateVirus() {
-        Requests().updateVirus(requireContext(), virusItem)
+        Requests().updateVirus(requireContext(), sharedPrefData.getUserName(), virusItem)
     }
 
     private fun deleteUser() {
-        Requests().deleteUser(requireContext(), requireActivity(), binding.myAccountFragmentTxtUserNameTextView.text.toString())
+        Requests().deleteUser(
+            requireContext(),
+            requireActivity(),
+            binding.myAccountFragmentTxtUserNameTextView.text.toString()
+        )
+        sharedPrefData.setVirusItemSelected(0)
+        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+    }
+
+    private fun updatingLocation() {
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
+        locationRequest = LocationRequest.create()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(p0: LocationResult) {
+                p0 ?: return
+                for (location in p0.locations) {
+                    Requests().update_latitude_longitude(
+                        requireContext(),
+                        binding.myAccountFragmentTxtUserNameTextView.text.toString(),
+                        location.latitude,
+                        location.longitude
+                    )
+                    Toast.makeText(
+                        requireContext(),
+                        "${location.latitude} : ${location.longitude}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+
+        getLocationUpdates()
     }
 
     private fun getLocationUpdates() {
-        locationRequest.interval = 20000
-        locationRequest.fastestInterval = 20000
-        locationRequest.smallestDisplacement = 0f // 170 m = 0.1 mile
+        locationRequest.interval = 10000
+        locationRequest.fastestInterval = 10000
+        locationRequest.smallestDisplacement = 0f
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function
-        locationCallback
 
     }
 
@@ -117,6 +154,11 @@ class MyAccountFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper()
+        )
     }
+
 }

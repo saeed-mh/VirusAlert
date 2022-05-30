@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/statisticsCoronaFragment">
+    app:startDestination="@id/introFragment">
 
     <fragment
         android:id="@+id/introFragment"
@@ -32,7 +32,8 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_statisticsCoronaFragment"
-            app:destination="@id/statisticsCoronaFragment" />
+            app:destination="@id/statisticsCoronaFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -41,7 +42,9 @@
         tools:layout="@layout/fragment_signup" >
         <action
             android:id="@+id/action_signupFragment_to_statisticsCoronaFragment"
-            app:destination="@id/statisticsCoronaFragment" />
+            app:destination="@id/statisticsCoronaFragment"
+            app:launchSingleTop="false"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/statisticsCoronaFragment"
