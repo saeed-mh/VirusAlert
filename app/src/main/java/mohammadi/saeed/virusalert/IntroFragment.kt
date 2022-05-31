@@ -3,16 +3,16 @@ package mohammadi.saeed.virusalert
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import mohammadi.saeed.virusalert.databinding.FragmentLoginBinding
 
 class IntroFragment : Fragment() {
     override fun onCreateView(
@@ -20,6 +20,24 @@ class IntroFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_intro, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            val dialog = AlertDialog.Builder(this@IntroFragment.requireContext())
+            dialog.setCancelable(true)
+            dialog.setMessage("آیا میخواهید از برنامه خارج شوید؟")
+            dialog.setPositiveButton("Yes") { _, _ ->
+                requireActivity().finish()
+            }
+            dialog.setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+            val alertDialog = dialog.create()
+            alertDialog.show()
+        }
+        onBackPressedCallback.isEnabled = true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

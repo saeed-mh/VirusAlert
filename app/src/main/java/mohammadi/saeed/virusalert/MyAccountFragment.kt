@@ -1,30 +1,36 @@
 package mohammadi.saeed.virusalert
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
-import android.opengl.Visibility
 import android.os.Bundle
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.android.gms.location.*
 import mohammadi.saeed.virusalert.databinding.FragmentMyAccountBinding
 
 class MyAccountFragment : Fragment() {
     lateinit var binding: FragmentMyAccountBinding
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    lateinit var locationCallback: LocationCallback
     lateinit var sharedPrefData: SharedPrefData
     var virusItem = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            val dialog = AlertDialog.Builder(this@MyAccountFragment.requireContext())
+            dialog.setCancelable(true)
+            dialog.setMessage("آیا میخواهید از برنامه خارج شوید؟")
+            dialog.setPositiveButton("Yes") { _, _ ->
+                requireActivity().finish()
+            }
+            dialog.setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+            val alertDialog = dialog.create()
+            alertDialog.show()
+        }
+        onBackPressedCallback.isEnabled = true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,17 +58,8 @@ class MyAccountFragment : Fragment() {
             }
         }
 
-        updatingLocation()
-
-
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.item1 -> {
-                    MainActivity().replaceFragment(
-                        view,
-                        R.id.action_myAccountFragment_to_statisticsCoronaFragment
-                    )
-                }
                 R.id.item2 -> {
                     MainActivity().replaceFragment(
                         view,
@@ -110,55 +107,5 @@ class MyAccountFragment : Fragment() {
             binding.myAccountFragmentTxtUserNameTextView.text.toString()
         )
         sharedPrefData.setVirusItemSelected(0)
-        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
     }
-
-    private fun updatingLocation() {
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireContext())
-        locationRequest = LocationRequest.create()
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
-                for (location in p0.locations) {
-                    Requests().update_latitude_longitude(
-                        requireContext(),
-                        binding.myAccountFragmentTxtUserNameTextView.text.toString(),
-                        location.latitude,
-                        location.longitude
-                    )
-                    Toast.makeText(
-                        requireContext(),
-                        "${location.latitude} : ${location.longitude}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        }
-
-        getLocationUpdates()
-    }
-
-    private fun getLocationUpdates() {
-        locationRequest.interval = 10000
-        locationRequest.fastestInterval = 10000
-        locationRequest.smallestDisplacement = 0f
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startLocationUpdates()
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
-        fusedLocationProviderClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
-        )
-    }
-
 }
