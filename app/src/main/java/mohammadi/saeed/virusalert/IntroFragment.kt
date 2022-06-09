@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import mohammadi.saeed.virusalert.model.SharedPrefData
 
 class IntroFragment : Fragment() {
     override fun onCreateView(
@@ -31,8 +32,8 @@ class IntroFragment : Fragment() {
             dialog.setPositiveButton("Yes") { _, _ ->
                 requireActivity().finish()
             }
-            dialog.setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
+            dialog.setNegativeButton("No") { alertDialog, _ ->
+                alertDialog.cancel()
             }
             val alertDialog = dialog.create()
             alertDialog.show()
@@ -44,6 +45,11 @@ class IntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val introActivityBtnLogIn = view.findViewById<Button>(R.id.introActivity_btn_LogIn)
         val introActivityBtnSignUp = view.findViewById<Button>(R.id.introActivity_btn_SignUp)
+        val sharedPrefData = SharedPrefData(requireContext())
+
+        // if the user has logged in before, it starts form MapFragment
+        if (sharedPrefData.isLogged())
+            MainActivity().replaceFragment(requireView(), R.id.action_introFragment_to_mapFragment)
 
         checkPermissions()
 

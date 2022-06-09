@@ -50,12 +50,24 @@
                 android:textAlignment="center"
                 android:importantForAutofill="no" />
 
+            <CheckBox
+                android:id="@+id/signUpActivityShowPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="130dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="130dp"
+                android:layoutDirection="rtl"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:text="@string/show_password" />
+
             <Button
                 android:id="@+id/signupActivityBtnSignUp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/button_color"
                 android:text="@string/signUp"

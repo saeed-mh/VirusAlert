@@ -1,12 +1,15 @@
 package mohammadi.saeed.virusalert
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.Selection
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import mohammadi.saeed.virusalert.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -27,6 +30,17 @@ class LoginFragment : Fragment() {
             if (checkInputEditText())
                 loginUser(view)
         }
+
+        binding.loginActivityShowPassword.setOnCheckedChangeListener { _, isChecked ->
+            val txtPass = view.findViewById<EditText>(R.id.loginActivityEditTextPassword)
+            if (!isChecked) {
+                binding.loginActivityEditTextPassword.transformationMethod = PasswordTransformationMethod()
+                txtPass.setSelection(txtPass.length())
+            } else {
+                binding.loginActivityEditTextPassword.transformationMethod = HideReturnsTransformationMethod()
+                txtPass.setSelection(txtPass.length())
+            }
+        }
     }
 
     private fun checkInputEditText() : Boolean {
@@ -43,5 +57,9 @@ class LoginFragment : Fragment() {
 
     private fun loginUser(view: View) {
         Requests().loginUser(requireContext(), view, binding.loginActivityEmailTextEmail.text, binding.loginActivityEditTextPassword.text)
+    }
+
+    private fun showPassword() {
+
     }
 }

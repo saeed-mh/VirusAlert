@@ -13,6 +13,8 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import mohammadi.saeed.virusalert.model.SharedPrefData
+import mohammadi.saeed.virusalert.model.Users
 import org.json.JSONArray
 
 
@@ -25,8 +27,6 @@ class Requests {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, createUserAPI, null, {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
-//                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
-//                userNamePref.edit().putString("userName", userName.toString()).apply()
                 val sharedPrefData = SharedPrefData(context)
                 sharedPrefData.setUserName(userName.toString())
                 // for first signup the virus item equals 0
@@ -36,6 +36,7 @@ class Requests {
 
                 val nav = Navigation.findNavController(view)
                 nav.navigate(SignupFragmentDirections.actionSignupFragmentToMapFragment())
+                sharedPrefData.setLogged(true)
             } else
                 Toast.makeText(context, "این نام کاربری وجود دارد", Toast.LENGTH_SHORT).show()
         }, {
@@ -53,13 +54,13 @@ class Requests {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, loginUserAPI, null, {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
-//                val userNamePref = context.getSharedPreferences("userName", Context.MODE_PRIVATE)
-//                userNamePref.edit().putString("userName", userName.toString()).apply()
                 val sharedPrefData = SharedPrefData(context)
                 sharedPrefData.setUserName(userName.toString())
 
                 val nav = Navigation.findNavController(view)
                 nav.navigate(LoginFragmentDirections.actionLoginFragmentToMapFragment())
+                sharedPrefData.setLogged(true)
+
             } else
                 Toast.makeText(context, "نام کاربری و رمز اشتباه است", Toast.LENGTH_SHORT)
                     .show()
@@ -78,6 +79,9 @@ class Requests {
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
+                val sharedPrefData = SharedPrefData(context)
+                sharedPrefData.setVirusItemSelected(0)
+                sharedPrefData.setLogged(false)
                 activity.moveTaskToBack(true)
                 activity.finish()
             }
@@ -115,13 +119,13 @@ class Requests {
                     val users = Users(latitudes[index].toDouble(), longitudes[index].toDouble(), viruses[index].toInt())
                     when (users.virus) {
                         // CORONA
-                        1 -> addUserOnMap(map, users.latitude, users.longitude, Color.GREEN)
+                        1 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* GREEN */"#8800ff00"))
                         // MEASLES
-                        2 -> addUserOnMap(map, users.latitude, users.longitude, Color.RED)
+                        2 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* RED */"#88ff0000"))
                         // FLU
-                        3 -> addUserOnMap(map, users.latitude, users.longitude, Color.BLUE)
+                        3 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* BLUE */"#880000ff"))
                         // OTHER
-                        4 -> addUserOnMap(map, users.latitude, users.longitude, Color.BLACK)
+                        4 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* BLACK */"#88000000"))
                     }
                 }
             }
@@ -150,20 +154,6 @@ class Requests {
         return list
     }
 
-    fun statisticsVirus(context: Context): ArrayList<String> {
-        var viruses: ArrayList<String> = arrayListOf()
-        val deleteUserAPI = "http://192.168.43.121:5000/select_virus_information"
-        val requestQueue = Volley.newRequestQueue(context)
-        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
-            viruses = it.getJSONArray("viruses").toArrayList()
-
-        }) {
-            Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
-        }
-        requestQueue.add((jsonObjectRequest))
-        return viruses
-    }
-
     fun update_latitude_longitude(
         context: Context,
         userName: String,
@@ -179,6 +169,4 @@ class Requests {
         }
         requestQueue.add((jsonObjectRequest))
     }
-
-
 }

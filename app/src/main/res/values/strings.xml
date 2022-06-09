@@ -12,4 +12,5 @@
     <string name="virusesStatistics">آمار افراد مبتلا</string>
     <string name="aroundViruses">ویروس های اطراف</string>
     <string name="myAccount">حساب کاربری</string>
+    <string name="show_password">نمایش رمز</string>
 </resources>

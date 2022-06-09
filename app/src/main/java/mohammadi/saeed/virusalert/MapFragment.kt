@@ -1,7 +1,6 @@
 package mohammadi.saeed.virusalert
 
 import android.annotation.SuppressLint
-import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -9,20 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.*
 import mohammadi.saeed.virusalert.databinding.FragmentMapBinding
+import mohammadi.saeed.virusalert.model.SharedPrefData
 
 class MapFragment() : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -124,6 +120,7 @@ class MapFragment() : Fragment() {
                         location.latitude,
                         location.longitude
                     )
+                    Toast.makeText(requireContext(), "updating...", Toast.LENGTH_SHORT).show()
                     Log.d("TAG_UPDATE", "onLocationResult: updating........")
                 }
             }
@@ -146,24 +143,11 @@ class MapFragment() : Fragment() {
         startLocationUpdates()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         update.cancel()
-
     }
-
-//    override fun onStop() {
-//        super.onStop()
-//        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-////        Toast.makeText(requireContext(), "pause", Toast.LENGTH_SHORT).show()
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-////        Toast.makeText(requireContext(), "pause", Toast.LENGTH_SHORT).show()
-//    }
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {

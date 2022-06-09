@@ -8,6 +8,7 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import mohammadi.saeed.virusalert.databinding.FragmentMyAccountBinding
+import mohammadi.saeed.virusalert.model.SharedPrefData
 
 class MyAccountFragment : Fragment() {
     lateinit var binding: FragmentMyAccountBinding
@@ -16,15 +17,19 @@ class MyAccountFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitApplication()
+    }
+
+    private fun exitApplication() {
         val onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             val dialog = AlertDialog.Builder(this@MyAccountFragment.requireContext())
             dialog.setCancelable(true)
             dialog.setMessage("آیا میخواهید از برنامه خارج شوید؟")
-            dialog.setPositiveButton("Yes") { _, _ ->
+            dialog.setPositiveButton("بله") { _, _ ->
                 requireActivity().finish()
             }
-            dialog.setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
+            dialog.setNegativeButton("خیر") { alertDialog, _ ->
+                alertDialog.cancel()
             }
             val alertDialog = dialog.create()
             alertDialog.show()
@@ -46,6 +51,7 @@ class MyAccountFragment : Fragment() {
         binding.myAccountFragmentTxtUserNameTextView.text = sharedPrefData.getUserName()
         binding.myAccountFragmentBtnApplyChanges.isEnabled = false
         binding.mainBottomNavigationMenu.selectedItemId = R.id.item3
+
         virusItem = sharedPrefData.getVirusItemSelected()
         when (virusItem) {
             0 -> binding.radioButton0.isChecked = true
@@ -106,6 +112,5 @@ class MyAccountFragment : Fragment() {
             requireActivity(),
             binding.myAccountFragmentTxtUserNameTextView.text.toString()
         )
-        sharedPrefData.setVirusItemSelected(0)
     }
 }

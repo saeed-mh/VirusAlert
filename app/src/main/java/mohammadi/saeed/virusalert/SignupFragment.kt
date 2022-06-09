@@ -1,9 +1,12 @@
 package mohammadi.saeed.virusalert
 
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import mohammadi.saeed.virusalert.databinding.FragmentSignupBinding
 
@@ -25,6 +28,17 @@ class SignupFragment : Fragment() {
         binding.signupActivityBtnSignUp.setOnClickListener {
             if (checkInputEditText())
                 signUpUser(view)
+        }
+
+        binding.signUpActivityShowPassword.setOnCheckedChangeListener { _, isChecked ->
+            val txtPass = view.findViewById<EditText>(R.id.signupActivityEditTextPassword)
+            if (!isChecked) {
+                binding.signupActivityEditTextPassword.transformationMethod = PasswordTransformationMethod()
+                txtPass.setSelection(txtPass.length())
+            } else {
+                binding.signupActivityEditTextPassword.transformationMethod = HideReturnsTransformationMethod()
+                txtPass.setSelection(txtPass.length())
+            }
         }
     }
 

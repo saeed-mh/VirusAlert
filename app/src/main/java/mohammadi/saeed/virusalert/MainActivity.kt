@@ -1,12 +1,12 @@
 package mohammadi.saeed.virusalert
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
+import mohammadi.saeed.virusalert.R
 
 class MainActivity : AppCompatActivity() {
 

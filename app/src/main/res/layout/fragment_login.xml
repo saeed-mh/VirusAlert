@@ -31,11 +31,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="80dp"
                 android:layout_marginEnd="16dp"
-                android:inputType="textEmailAddress"
                 android:hint="@string/pleaseEnterYourEmail"
-                android:textColorHint="#0096ff"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
                 android:textAlignment="center"
-                android:importantForAutofill="no" />
+                android:textColorHint="#0096ff" />
 
             <EditText
                 android:id="@+id/loginActivityEditTextPassword"
@@ -44,18 +44,30 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
-                android:inputType="textPassword"
                 android:hint="@string/pleaseEnterYourPassword"
-                android:textColorHint="#0096ff"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
                 android:textAlignment="center"
-                android:importantForAutofill="no" />
+                android:textColorHint="#0096ff" />
+
+            <CheckBox
+                android:id="@+id/loginActivityShowPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:layoutDirection="rtl"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:text="@string/show_password" />
 
             <Button
                 android:id="@+id/loginActivityBtnLogIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="130dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/button_color"
                 android:text="@string/logIn"
