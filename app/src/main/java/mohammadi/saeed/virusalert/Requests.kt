@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.text.Editable
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.android.volley.Request
@@ -13,9 +15,12 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.OnSuccessListener
+import mohammadi.saeed.virusalert.model.EVirusType
 import mohammadi.saeed.virusalert.model.SharedPrefData
 import mohammadi.saeed.virusalert.model.Users
 import org.json.JSONArray
+import org.w3c.dom.Text
 import kotlin.collections.ArrayList
 
 
@@ -166,6 +171,33 @@ class Requests {
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
 
+        }) {
+            Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
+        }
+        requestQueue.add((jsonObjectRequest))
+    }
+
+    fun getCountCorona(context: Context, virusType: EVirusType, txtViewCountCorona: TextView) {
+        var getCountVirusAPI = ""
+        when (virusType) {
+            EVirusType.corona -> {
+                getCountVirusAPI += "http://192.168.43.121:5000/count_corona"
+            }
+            EVirusType.measles -> {
+                getCountVirusAPI += "http://192.168.43.121:5000/count_measles"
+            }
+            EVirusType.flu -> {
+                getCountVirusAPI += "http://192.168.43.121:5000/count_flu"
+            }
+            EVirusType.otherViruses -> {
+                getCountVirusAPI += "http://192.168.43.121:5000/count_other_viruses"
+            }
+        }
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, getCountVirusAPI, null, {
+            val count = it.getInt("result")
+            txtViewCountCorona.text = "تعداد $count"
+            Log.d("getCountCoronaTAG", "getCountCorona: $count")
         }) {
             Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
         }

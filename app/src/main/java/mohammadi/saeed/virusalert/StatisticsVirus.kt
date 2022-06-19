@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import mohammadi.saeed.virusalert.databinding.FragmentStatisticsVirusBinding
+import mohammadi.saeed.virusalert.model.EVirusType
 
 class StatisticsVirus : Fragment() {
     override fun onCreateView(
@@ -56,5 +57,11 @@ class StatisticsVirus : Fragment() {
             }
             return@setOnItemSelectedListener true
         }
+        Requests().getCountCorona(requireContext(),EVirusType.corona ,binding.statisticsVirusTxtCountCorona)
+        Requests().getCountCorona(requireContext(),EVirusType.measles ,binding.statisticsVirusTxtCountMeasles)
+        Requests().getCountCorona(requireContext(),EVirusType.flu ,binding.statisticsVirusTxtCountFlu)
+        Requests().getCountCorona(requireContext(),EVirusType.otherViruses ,binding.statisticsVirusTxtCountOtherViruses)
+
+
     }
 }
