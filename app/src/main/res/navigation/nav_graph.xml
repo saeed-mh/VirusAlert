@@ -61,6 +61,9 @@
             android:id="@+id/action_mapFragment_to_myAccountFragment"
             app:destination="@id/myAccountFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_mapFragment_to_statisticsVirus"
+            app:destination="@id/statisticsVirus" />
     </fragment>
     <fragment
         android:id="@+id/myAccountFragment"
@@ -73,9 +76,19 @@
             app:launchSingleTop="false"
             app:popUpToInclusive="false" />
         <action
-            android:id="@+id/action_myAccountFragment_to_mapFragment2"
-            app:destination="@id/mapFragment"
-            app:popUpTo="@id/myAccountFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_myAccountFragment_to_statisticsVirus"
+            app:destination="@id/statisticsVirus" />
+    </fragment>
+    <fragment
+        android:id="@+id/statisticsVirus"
+        android:name="mohammadi.saeed.virusalert.StatisticsVirus"
+        android:label="fragment_statistics_virus"
+        tools:layout="@layout/fragment_statistics_virus" >
+        <action
+            android:id="@+id/action_statisticsVirus_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <action
+            android:id="@+id/action_statisticsVirus_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
     </fragment>
 </navigation>

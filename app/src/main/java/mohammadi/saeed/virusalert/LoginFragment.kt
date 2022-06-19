@@ -1,8 +1,6 @@
 package mohammadi.saeed.virusalert
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.Selection
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -57,9 +55,5 @@ class LoginFragment : Fragment() {
 
     private fun loginUser(view: View) {
         Requests().loginUser(requireContext(), view, binding.loginActivityEmailTextEmail.text, binding.loginActivityEditTextPassword.text)
-    }
-
-    private fun showPassword() {
-
     }
 }

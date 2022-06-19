@@ -2,12 +2,12 @@ package mohammadi.saeed.virusalert
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -36,8 +36,8 @@ class MapFragment() : Fragment() {
             dialog.setPositiveButton("Yes") { _, _ ->
                 requireActivity().finish()
             }
-            dialog.setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
+            dialog.setNegativeButton("No") { alertDialog, _ ->
+                alertDialog.cancel()
             }
             val alertDialog = dialog.create()
             alertDialog.show()
@@ -48,25 +48,26 @@ class MapFragment() : Fragment() {
 
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
-//         update map with coroutines
 
-        update = GlobalScope.launch(Dispatchers.Main) {
-            while (true) {
-                delay(5000)
-                Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
-            }
-        }
-        update.start()
-        // update map with thread
-//        updateThread = Thread(kotlinx.coroutines.Runnable {
+
+//      update map with coroutines
+      update = GlobalScope.launch(Dispatchers.Main) {
+          while (true) {
+              delay(5000)
+              Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
+          }
+      }
+      update.start()
+
+
+        //create a coroutine scope
+//        val scope = CoroutineScope(Dispatchers.Main)
+//        scope.launch {
 //            while (true) {
-//                Thread.sleep(5000)
-//                requireActivity().runOnUiThread {
-//                    Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
-//                }
-//            }
-//        })
-//        updateThread.start()
+//              delay(5000)
+//              Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
+//          }
+//        }.start()
 
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(32.4279, 53.6880), 15f))
@@ -91,7 +92,13 @@ class MapFragment() : Fragment() {
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
-                // item 1 == this fragment
+                R.id.item1 -> {
+                    MainActivity().replaceFragment(
+                        view,
+                        R.id.action_mapFragment_to_statisticsVirus
+                    )
+                }
+                // item 2 == this fragment
                 R.id.item3 -> {
                     MainActivity().replaceFragment(
                         view,
@@ -107,21 +114,12 @@ class MapFragment() : Fragment() {
     }
 
     private fun updatingLocation() {
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
         locationRequest = LocationRequest.create()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(p0: LocationResult) {
-                p0 ?: return
                 for (location in p0.locations) {
-                    Requests().update_latitude_longitude(
-                        requireContext(),
-                        sharedPrefData.getUserName(),
-                        location.latitude,
-                        location.longitude
-                    )
-                    Toast.makeText(requireContext(), "updating...", Toast.LENGTH_SHORT).show()
-                    Log.d("TAG_UPDATE", "onLocationResult: updating........")
+                    Requests().updateLatitudeLongitude(requireContext(), sharedPrefData.getUserName(), location.latitude, location.longitude)
                 }
             }
         }

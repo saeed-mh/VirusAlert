@@ -16,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import mohammadi.saeed.virusalert.model.SharedPrefData
 import mohammadi.saeed.virusalert.model.Users
 import org.json.JSONArray
+import kotlin.collections.ArrayList
 
 
 class Requests {
@@ -32,7 +33,7 @@ class Requests {
                 // for first signup the virus item equals 0
                 updateVirus(context, sharedPrefData.getUserName(), 0)
                 // for first signup latitude and longitude equals 0
-                update_latitude_longitude(context, sharedPrefData.getUserName(), 0.0, 0.0)
+                updateLatitudeLongitude(context, sharedPrefData.getUserName(), 0.0, 0.0)
 
                 val nav = Navigation.findNavController(view)
                 nav.navigate(SignupFragmentDirections.actionSignupFragmentToMapFragment())
@@ -116,16 +117,16 @@ class Requests {
 
             for (index in 0 until viruses.size) {
                 if (viruses[index].toInt() != 0) {
-                    val users = Users(latitudes[index].toDouble(), longitudes[index].toDouble(), viruses[index].toInt())
-                    when (users.virus) {
+                    val user = Users(latitudes[index].toDouble(), longitudes[index].toDouble(), viruses[index].toInt())
+                    when (user.virus) {
                         // CORONA
-                        1 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* GREEN */"#8800ff00"))
+                        1 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* GREEN */"#8800ff00"))
                         // MEASLES
-                        2 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* RED */"#88ff0000"))
+                        2 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* RED */"#88ff0000"))
                         // FLU
-                        3 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* BLUE */"#880000ff"))
+                        3 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLUE */"#880000ff"))
                         // OTHER
-                        4 -> addUserOnMap(map, users.latitude, users.longitude, Color.parseColor(/* BLACK */"#88000000"))
+                        4 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLACK */"#88000000"))
                     }
                 }
             }
@@ -154,13 +155,14 @@ class Requests {
         return list
     }
 
-    fun update_latitude_longitude(
+    fun updateLatitudeLongitude(
         context: Context,
         userName: String,
         latitude: Double,
         longitude: Double
     ) {
-        val deleteUserAPI = "http://192.168.43.121:5000/update_latitude_longitude?username=$userName&latitude=$latitude&longitude=$longitude"
+        val deleteUserAPI =
+            "http://192.168.43.121:5000/update_latitude_longitude?username=$userName&latitude=$latitude&longitude=$longitude"
         val requestQueue = Volley.newRequestQueue(context)
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
 

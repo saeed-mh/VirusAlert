@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#2A53CC"
-        android:text="اعمال تغییرات"
+        android:text="@string/apply_changes"
         android:textSize="17sp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
@@ -59,7 +59,8 @@
                 android:textDirection="rtl"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="209dp">
+                tools:layout_editor_absoluteY="209dp"
+                tools:ignore="UselessParent">
 
                 <RadioButton
                     android:id="@+id/radioButton0"
@@ -67,35 +68,35 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:enabled="true"
-                    android:text="فاقد بیماری"
+                    android:text="@string/no_virus"
                     android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioButton1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="کرونا"
+                    android:text="@string/corona"
                     android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioButton2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="سرخک"
+                    android:text="@string/measles"
                     android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioButton3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="آنفولانزا"
+                    android:text="@string/flu"
                     android:textSize="20sp" />
 
                 <RadioButton
                     android:id="@+id/radioButton4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="دیگر"
+                    android:text="@string/other_virus"
                     android:textSize="20sp" />
             </RadioGroup>
 
@@ -110,7 +111,7 @@
         android:layout_marginEnd="19dp"
         android:layout_marginBottom="80dp"
         android:backgroundTint="#2A53CC"
-        android:text="حذف حساب کاربری"
+        android:text="@string/delete_user_account"
         android:textSize="17sp"
         android:textStyle="bold"
         app:cornerRadius="20dp"
@@ -123,10 +124,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        tools:text="Saeed"
+        android:textColor="#0096ff"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Saeed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

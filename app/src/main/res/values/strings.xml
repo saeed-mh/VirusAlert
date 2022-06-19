@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VirusAlert</string>
+    <string name="app_name">ویروس یاب</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp">ثبت نام</string>
@@ -13,4 +13,12 @@
     <string name="aroundViruses">ویروس های اطراف</string>
     <string name="myAccount">حساب کاربری</string>
     <string name="show_password">نمایش رمز</string>
+    <string name="apply_changes">اعمال تغییرات</string>
+    <string name="no_virus">فاقد بیماری</string>
+    <string name="corona">کرونا</string>
+    <string name="measles">سرخک</string>
+    <string name="flu">آنفولانزا</string>
+    <string name="other_virus">دیگر ویروس ها</string>
+    <string name="delete_user_account">حذف حساب کاربری</string>
+    <string name="statisticsViruses">آمار ویروس ها</string>
 </resources>

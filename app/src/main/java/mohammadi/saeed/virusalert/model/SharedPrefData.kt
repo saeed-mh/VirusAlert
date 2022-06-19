@@ -36,6 +36,20 @@ class SharedPrefData (val context: Context) {
         return sharedPreferences.getBoolean("isLogged", false)
     }
 
+    fun setLocationState(lat:Double, long: Double, zoom: Float) {
+        sharedPreferences = context.getSharedPreferences("locationState", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putFloat("lat", lat.toFloat()).apply()
+        sharedPreferences.edit().putFloat("long", long.toFloat()).apply()
+        sharedPreferences.edit().putFloat("zoom", zoom).apply()
+    }
+
+    fun getLocationState() : ArrayList<Float> {
+        sharedPreferences = context.getSharedPreferences("locationState", Context.MODE_PRIVATE)
+        return arrayListOf(
+            sharedPreferences.getFloat("lat", 0.0f),
+            sharedPreferences.getFloat("long", 0.0f),
+            sharedPreferences.getFloat("zoom", 0.0f))
+    }
 
 
 }

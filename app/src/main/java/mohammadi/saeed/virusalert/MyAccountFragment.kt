@@ -11,9 +11,9 @@ import mohammadi.saeed.virusalert.databinding.FragmentMyAccountBinding
 import mohammadi.saeed.virusalert.model.SharedPrefData
 
 class MyAccountFragment : Fragment() {
-    lateinit var binding: FragmentMyAccountBinding
-    lateinit var sharedPrefData: SharedPrefData
-    var virusItem = 0
+    private lateinit var binding: FragmentMyAccountBinding
+    private lateinit var sharedPrefData: SharedPrefData
+    private var virusItem = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +66,12 @@ class MyAccountFragment : Fragment() {
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
+                R.id.item1 -> {
+                    MainActivity().replaceFragment(
+                        view,
+                        R.id.action_myAccountFragment_to_statisticsVirus
+                    )
+                }
                 R.id.item2 -> {
                     MainActivity().replaceFragment(
                         view,
@@ -107,10 +113,16 @@ class MyAccountFragment : Fragment() {
     }
 
     private fun deleteUser() {
-        Requests().deleteUser(
-            requireContext(),
-            requireActivity(),
-            binding.myAccountFragmentTxtUserNameTextView.text.toString()
-        )
+        val dialog = AlertDialog.Builder(this@MyAccountFragment.requireContext())
+        dialog.setCancelable(true)
+        dialog.setMessage("آیا از حذف حساب کاربری اطمینان دارید؟")
+        dialog.setPositiveButton("بله") { _, _ ->
+            Requests().deleteUser(requireContext(), requireActivity(), binding.myAccountFragmentTxtUserNameTextView.text.toString())
+            requireActivity().finish()
+        }
+        dialog.setNegativeButton("خیر") { alertDialog, _ ->
+            alertDialog.cancel()
+        }
+        dialog.create().show()
     }
 }
