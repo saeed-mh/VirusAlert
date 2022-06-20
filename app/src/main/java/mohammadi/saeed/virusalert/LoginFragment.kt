@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import mohammadi.saeed.virusalert.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
-    lateinit var binding: FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

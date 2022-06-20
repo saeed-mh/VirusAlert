@@ -1,14 +1,11 @@
 <resources>
     <string name="app_name">ویروس یاب</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signUp">ثبت نام</string>
     <string name="logIn">ورود</string>
     <string name="virusAlert">ویروس یاب</string>
     <string name="loading_text">در حال لود شدن تصویر</string>
     <string name="pleaseEnterYourPassword">لطفا رمز خود را وارد کنید</string>
     <string name="pleaseEnterYourEmail">لطفا ایمیل خود را وارد کنید</string>
-    <string name="doYouHaveVirus">آیا در حال حاضر بیماری دارید؟</string>
     <string name="virusesStatistics">آمار افراد مبتلا</string>
     <string name="aroundViruses">ویروس های اطراف</string>
     <string name="myAccount">حساب کاربری</string>
@@ -20,5 +17,6 @@
     <string name="flu">آنفولانزا</string>
     <string name="other_virus">دیگر ویروس ها</string>
     <string name="delete_user_account">حذف حساب کاربری</string>
-    <string name="statisticsViruses">آمار ویروس ها</string>
+    <string name="yourGPSdisabled">موقعیت مکانی شما غیر فعال است</string>
+    <string name="count">تعداد</string>
 </resources>

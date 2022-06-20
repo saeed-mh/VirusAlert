@@ -1,10 +1,11 @@
 package mohammadi.saeed.virusalert
 
 import android.annotation.SuppressLint
+import android.content.Context.LOCATION_SERVICE
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,10 +23,10 @@ import mohammadi.saeed.virusalert.model.SharedPrefData
 
 class MapFragment() : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private lateinit var locationCallback: LocationCallback
+    private lateinit var update: Job
     lateinit var sharedPrefData: SharedPrefData
-    lateinit var update: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,28 +50,25 @@ class MapFragment() : Fragment() {
     @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
 
+        fusedLocationProviderClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                fusedLocationProviderClient.lastLocation.addOnSuccessListener {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(it.latitude, it.longitude), 16f))
+                }
+            } else {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(32.4279, 53.6880), 6f))
+            }
+        }
 
-//      update map with coroutines
-      update = GlobalScope.launch(Dispatchers.Main) {
-          while (true) {
-              delay(5000)
-              Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
-          }
-      }
-      update.start()
+        //  update map with coroutines
+        update = GlobalScope.launch(Dispatchers.Main) {
+            while (true) {
+                delay(5000)
+                Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
+            }
+        }
+        update.start()
 
-
-        //create a coroutine scope
-//        val scope = CoroutineScope(Dispatchers.Main)
-//        scope.launch {
-//            while (true) {
-//              delay(5000)
-//              Requests().fetchUsersAndShowOnMap(requireContext(), googleMap)
-//          }
-//        }.start()
-
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(32.4279, 53.6880), 15f))
 
     }
 
@@ -87,6 +85,13 @@ class MapFragment() : Fragment() {
         val binding = FragmentMapBinding.bind(view)
         binding.mainBottomNavigationMenu.selectedItemId = R.id.item2
         sharedPrefData = SharedPrefData(requireContext())
+
+        val locationManager = activity!!.getSystemService(LOCATION_SERVICE) as LocationManager
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            binding.txtShowErrorDisableGPS.visibility = View.VISIBLE
+        } else {
+            binding.txtShowErrorDisableGPS.visibility = View.INVISIBLE
+        }
 
         updatingLocation()
 
@@ -127,12 +132,13 @@ class MapFragment() : Fragment() {
         getLocationUpdates()
     }
 
+
+
     private fun getLocationUpdates() {
         locationRequest.interval = 5000
         locationRequest.fastestInterval = 5000
         locationRequest.smallestDisplacement = 0f
-        locationRequest.priority =
-            LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //set according to your app function
 
     }
 

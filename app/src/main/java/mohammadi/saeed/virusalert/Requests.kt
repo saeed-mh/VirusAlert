@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.text.Editable
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
@@ -15,13 +17,10 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.OnSuccessListener
 import mohammadi.saeed.virusalert.model.EVirusType
 import mohammadi.saeed.virusalert.model.SharedPrefData
 import mohammadi.saeed.virusalert.model.Users
 import org.json.JSONArray
-import org.w3c.dom.Text
-import kotlin.collections.ArrayList
 
 
 class Requests {
@@ -86,7 +85,6 @@ class Requests {
             val jsonObject = it.getBoolean("result")
             if (jsonObject) {
                 val sharedPrefData = SharedPrefData(context)
-                sharedPrefData.setVirusItemSelected(0)
                 sharedPrefData.setLogged(false)
                 activity.moveTaskToBack(true)
                 activity.finish()
@@ -104,8 +102,6 @@ class Requests {
         val requestQueue = Volley.newRequestQueue(context)
         val stringRequest = JsonObjectRequest(Request.Method.GET, deleteUserAPI, null, {
         }, {
-            val sharedPrefData = SharedPrefData(context)
-            sharedPrefData.setVirusItemSelected(virusItem)
             Toast.makeText(context, "اینترنت خود را بررسی کنید", Toast.LENGTH_SHORT).show()
         })
         requestQueue.add(stringRequest)
@@ -125,13 +121,13 @@ class Requests {
                     val user = Users(latitudes[index].toDouble(), longitudes[index].toDouble(), viruses[index].toInt())
                     when (user.virus) {
                         // CORONA
-                        1 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* GREEN */"#8800ff00"))
+                        1 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* GREEN */"#6600ff00"))
                         // MEASLES
-                        2 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* RED */"#88ff0000"))
+                        2 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* RED */"#66ff0000"))
                         // FLU
-                        3 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLUE */"#880000ff"))
+                        3 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLUE */"#660000ff"))
                         // OTHER
-                        4 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLACK */"#88000000"))
+                        4 -> addUserOnMap(map, user.latitude, user.longitude, Color.parseColor(/* BLACK */"#66000000"))
                     }
                 }
             }
@@ -179,18 +175,18 @@ class Requests {
 
     fun getCountCorona(context: Context, virusType: EVirusType, txtViewCountCorona: TextView) {
         var getCountVirusAPI = ""
-        when (virusType) {
+        getCountVirusAPI += when (virusType) {
             EVirusType.corona -> {
-                getCountVirusAPI += "http://192.168.43.121:5000/count_corona"
+                "http://192.168.43.121:5000/count_corona"
             }
             EVirusType.measles -> {
-                getCountVirusAPI += "http://192.168.43.121:5000/count_measles"
+                "http://192.168.43.121:5000/count_measles"
             }
             EVirusType.flu -> {
-                getCountVirusAPI += "http://192.168.43.121:5000/count_flu"
+                "http://192.168.43.121:5000/count_flu"
             }
             EVirusType.otherViruses -> {
-                getCountVirusAPI += "http://192.168.43.121:5000/count_other_viruses"
+                "http://192.168.43.121:5000/count_other_viruses"
             }
         }
         val requestQueue = Volley.newRequestQueue(context)
@@ -201,6 +197,25 @@ class Requests {
         }) {
             Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
         }
+        requestQueue.add((jsonObjectRequest))
+    }
+
+    fun getVirusByUsername(context: Context, userName: String, radioGroup: RadioGroup, btnApplyChange: Button) {
+        val getVirusByUsernameAPI = "http://192.168.43.121:5000/get_virus_by_name?username=${userName}"
+        val requestQueue = Volley.newRequestQueue(context)
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, getVirusByUsernameAPI, null, {
+            when (it.getInt("result")) {
+                0 -> radioGroup.check(R.id.radioButton0)
+                1 -> radioGroup.check(R.id.radioButton1)
+                2 -> radioGroup.check(R.id.radioButton2)
+                3 -> radioGroup.check(R.id.radioButton3)
+                4 -> radioGroup.check(R.id.radioButton4)
+            }
+            btnApplyChange.isEnabled = false
+
+        }, {
+            Toast.makeText(context, "مشکل در اتصال به سرور", Toast.LENGTH_SHORT).show()
+        })
         requestQueue.add((jsonObjectRequest))
     }
 }

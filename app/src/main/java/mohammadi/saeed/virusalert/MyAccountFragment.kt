@@ -49,20 +49,9 @@ class MyAccountFragment : Fragment() {
         binding = FragmentMyAccountBinding.bind(view)
         sharedPrefData = SharedPrefData(requireContext())
         binding.myAccountFragmentTxtUserNameTextView.text = sharedPrefData.getUserName()
-        binding.myAccountFragmentBtnApplyChanges.isEnabled = false
         binding.mainBottomNavigationMenu.selectedItemId = R.id.item3
 
-        virusItem = sharedPrefData.getVirusItemSelected()
-        when (virusItem) {
-            0 -> binding.radioButton0.isChecked = true
-            1 -> binding.radioButton1.isChecked = true
-            2 -> binding.radioButton2.isChecked = true
-            3 -> binding.radioButton3.isChecked = true
-            4 -> binding.radioButton4.isChecked = true
-            else -> {
-                binding.radioButton0.isChecked = true
-            }
-        }
+        Requests().getVirusByUsername(requireContext(), sharedPrefData.getUserName(), binding.myAccountFragmentRadioGroup, binding.myAccountFragmentBtnApplyChanges)
 
         binding.mainBottomNavigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
@@ -95,7 +84,6 @@ class MyAccountFragment : Fragment() {
                     0
                 }
             }
-            sharedPrefData.setVirusItemSelected(virusItem)
         }
 
         binding.myAccountFragmentBtnApplyChanges.setOnClickListener {
