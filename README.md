@@ -3,12 +3,15 @@
 ## what does it do?
 
 Using the app, users can see who is infected with the virus ( COVID-19, FLU, MEASLES and otherViruses ) in their location.
-everyone who are infected, it shows them in a map ( I've used Google Map API ) for other people as a circle with specific color
+everyone who are infected, it shows them in a map ( I've used Google Map API ) for other people as a circle with specific color.
 for example one has a measles:
+
 
 ![image](https://user-images.githubusercontent.com/75900669/179374374-1609ff27-1f1e-4bf8-b6de-0ab3c0452368.png)
 
+
 also, users can see how many people are infected with virus:
+
 
 ![image](https://user-images.githubusercontent.com/75900669/179374435-aa2d2863-c8d9-447b-97db-0331b4e7ffcb.png)
 
